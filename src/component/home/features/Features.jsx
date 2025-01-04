@@ -10,7 +10,7 @@ export default function Features() {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch('http://localhost:8080/public/home/get-features')
+    fetch('https://ec2-54-144-83-19.compute-1.amazonaws.com/public/home/get-features')
       .then(response => response.json())
       .then(data => {
         // Map icons to the feature data
