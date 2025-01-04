@@ -22,7 +22,7 @@ import Footer from './component/Footer/Footer.jsx';
 function App() {
   const [activePage, setActivePage] = useState('dashboard');
   const [isAuthenticated, setIsAuthenticated] = useState(!!sessionStorage.getItem('username'));
-  const url = 'http://localhost:8080';
+  const url = 'https://jabackend-production.up.railway.app';
 
   return (
     <Router>
