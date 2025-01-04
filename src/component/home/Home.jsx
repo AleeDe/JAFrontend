@@ -8,7 +8,7 @@ import Hero from "./hero/Hero";
 import Testimonials from "./testimonials/Testimonials";
 
 
-export default function Home() {
+export default function Home({ url }) {
   const [isLoading, setIsLoading] = useState(true)
   toast.success("WelCome to HomePage!");
 
@@ -60,11 +60,11 @@ export default function Home() {
 
   return (
     <main>
-      <Hero />
-      <Features />
-      <Testimonials />
-      <About />
-      <Contact />
+      <Hero url={url}/>
+      <Features url={url}/>
+      <Testimonials url={url}/>
+      <About url={url}/>
+      <Contact url={url}/>
     </main>
   )
 }

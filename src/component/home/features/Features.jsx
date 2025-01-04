@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calculator, Clock, Shield, Zap ,Loader} from 'lucide-react';
 
-export default function Features() {
+export default function Features({ url }) {
   const [state, setState] = useState({
     heading: '',
     subheading: '',
@@ -10,7 +10,7 @@ export default function Features() {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch('http://localhost:8080/public/home/get-features')
+    fetch(url+'/public/home/get-features')
       .then(response => response.json())
       .then(data => {
         // Map icons to the feature data
