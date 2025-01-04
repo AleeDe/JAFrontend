@@ -22,7 +22,7 @@ import Footer from './component/Footer/Footer.jsx';
 function App() {
   const [activePage, setActivePage] = useState('dashboard');
   const [isAuthenticated, setIsAuthenticated] = useState(!!sessionStorage.getItem('username'));
-  const url = 'https://jabackendfinal.onrender.com';
+  const url = 'http://ec2-54-144-83-19.compute-1.amazonaws.com/';
 
   return (
     <Router>
