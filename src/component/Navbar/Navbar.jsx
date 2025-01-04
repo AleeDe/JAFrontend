@@ -37,7 +37,7 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
           {/* Logo */}
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center text-xl font-bold text-blue-600">
-              JA
+              MindMemoirs
             </a>
           </div>
 
