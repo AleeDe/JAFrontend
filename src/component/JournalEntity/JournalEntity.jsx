@@ -99,7 +99,7 @@ export default function JournalEntity({ url }) {
     const auth = 'Basic ' + btoa(username + ':' + password);
 
     try {
-      await api.delete(`/journal/deleteJournalEntry/${id}`, {
+      await axios.delete(url+`/journal/deleteJournalEntry/${id}`, {
         headers: {
           Authorization: auth,
         },
