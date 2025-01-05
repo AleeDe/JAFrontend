@@ -94,8 +94,8 @@ export default function JournalEntity({ url }) {
   };
 
   const handleDeletePost = async (id) => {
-    const username = sessionStorage.getItem('username');
-    const password = sessionStorage.getItem('password');
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
     const auth = 'Basic ' + btoa(username + ':' + password);
 
     try {
@@ -167,7 +167,7 @@ export default function JournalEntity({ url }) {
     );
   }
 
-  const currentUser = sessionStorage.getItem('username');
+  const currentUser = localStorage.getItem('username');
 
   return (
     <div className="min-h-screen p-4 mt-16 bg-gradient-to-br from-purple-100 to-pink-100 sm:p-6 md:p-8">

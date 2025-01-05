@@ -6,9 +6,9 @@ import { Edit2, Trash2, User, Camera, MapPin, Calendar, Briefcase } from 'lucide
 // Demo user data
 const demoUser = {
   id: '1',
-  username: sessionStorage.getItem('username'),
-  name: sessionStorage.getItem('username'),
-  email: sessionStorage.getItem('username') + '@example.com',
+  username: localStorage.getItem('username'),
+  name: localStorage.getItem('username'),
+  email: localStorage.getItem('username') + '@example.com',
   bio: 'Passionate about technology and photography. Always learning, always growing.',
   location: 'San Francisco, CA',
   joinDate: 'June 2020',
