@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Pencil, Trash2, Users, UserPlus, Search, X } from 'lucide-react';
@@ -10,7 +10,7 @@ const getRandomAvatar = (username) => {
   return `https://api.dicebear.com/6.x/${randomStyle}/svg?seed=${encodeURIComponent(username)}`;
 };
 
-  const baseURL = "http://localhost:8080/admin"; // Replace with your API base URL
+   // Replace with your API base URL
 
 
 const roleColors = {
@@ -27,28 +27,26 @@ const User = ({ url }) => {
   const password = sessionStorage.getItem('password');
   const auth = 'Basic ' + btoa(username + ':' + password);
   const [isLoading, setIsLoading] = useState(true)
-  const authHeaders = {
+  const authHeaders = useMemo(() => ({
     headers: {
       'Authorization': auth // Replace 'username:password' with your actual credentials
     }
-  };
+  }), [auth]);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
-      const response = await axios .get(baseURL+'/getUsers', authHeaders); // Replace with your API endpoint
+      const response = await axios.get(baseURL + '/admin/getUsers', authHeaders); // Replace with your API endpoint
       const usersWithAvatars = response.data.map(user => ({
         ...user,
         avatar: getRandomAvatar(user.username),
-        
       }));
       setUsers(usersWithAvatars);
     } catch (error) {
       console.error('Failed to fetch users:', error);
-    }
-    finally{
+    } finally {
       setIsLoading(false);
     }
-  };
+  }, [authHeaders, baseURL]);
 
   const handleEdit = (user) => {
     setEditingUser(user);
@@ -58,7 +56,7 @@ const User = ({ url }) => {
   const handleDelete = async (userId) => {
     try {
       setIsLoading(true);
-      await axios.delete(baseURL+`/deleteUser/${userId}`, authHeaders); // Replace with your API endpoint
+      await axios.delete(baseURL+`/admin/deleteUser/${userId}`, authHeaders); // Replace with your API endpoint
       setUsers(users.filter(user => user.id !== userId));
       toast.success('User deleted successfully');
     } catch (error) {
@@ -81,7 +79,7 @@ const User = ({ url }) => {
     try {
       console.log(updatedUser);
       setIsLoading(true);
-      await axios.put(baseURL+`/updateUser/${updatedUser.id}`, updatedUser, authHeaders); // Replace with your API endpoint
+      await axios.put(baseURL+`/admin/updateUser/${updatedUser.id}`, updatedUser, authHeaders); // Replace with your API endpoint
       setUsers(users.map(user => user.id === updatedUser.id ? { ...updatedUser, avatar: getRandomAvatar(updatedUser.username) } : user));
       setEditingUser(null);
       setIsModalOpen(false);
