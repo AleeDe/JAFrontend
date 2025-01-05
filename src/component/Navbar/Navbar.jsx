@@ -17,9 +17,9 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('password');
-    sessionStorage.removeItem('role');
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+    localStorage.removeItem('role');
     setIsAuthenticated(false);
     navigate('/login');
   };
@@ -66,8 +66,8 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
                 {isProfileOpen && (
                   <div className="absolute right-0 w-48 py-1 mt-2 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                     <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-sm font-medium text-gray-900">{sessionStorage.getItem('username')}</p>
-                      <p className="text-sm text-gray-500">{sessionStorage.getItem('username')}@example.com</p>
+                      <p className="text-sm font-medium text-gray-900">{localStorage.getItem('username')}</p>
+                      <p className="text-sm text-gray-500">{localStorage.getItem('username')}@example.com</p>
                     </div>
                     <Link
                       to="/profile"

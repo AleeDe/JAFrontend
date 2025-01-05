@@ -27,7 +27,7 @@ const Sidebar = ({ activePage, setActivePage ,setIsAuthenticated}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const role = sessionStorage.getItem('role');
+    const role = localStorage.getItem('role');
     if (role !== 'ADMIN') {
       navigate('/login');
     }
@@ -74,9 +74,9 @@ const Sidebar = ({ activePage, setActivePage ,setIsAuthenticated}) => {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('password');
-    sessionStorage.removeItem('role');
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+    localStorage.removeItem('role');
     setIsAuthenticated(false);
     navigate('/login');
   };

@@ -20,8 +20,8 @@ const demoUser = {
  // Replace with your actual API endpoint
 
 // Basic Auth credentials
-const username = sessionStorage.getItem('username');
-const password = sessionStorage.getItem('password');
+const username = localStorage.getItem('username');
+const password = localStorage.getItem('password');
 const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
 
 export default function Profile({ url }) {

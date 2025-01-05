@@ -5,31 +5,26 @@ import { PlusCircle, Edit2, Trash2 } from 'lucide-react'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 
-const createApiInstance = (url) => {
-  return axios.create({
-    baseURL: url, // Replace with your API base URL
-     }) }
-
 // Demo data
 const demoData = []
 
 export default function JournalEntity({ url }) {
-  const api = createApiInstance(url)
   const [posts, setPosts] = useState(demoData)
   const [newPost, setNewPost] = useState({ title: '', content: '' })
   const [editingPost, setEditingPost] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
 
+        const username = localStorage.getItem('username');
+        const password = localStorage.getItem('password');
+        const auth = 'Basic ' + btoa(username + ':' + password);
   useEffect(() => {
     const fetchData = async () => {
       // Simulating API fetch with demo data
       try {
-        const username = sessionStorage.getItem('username');
-        const password = sessionStorage.getItem('password');
-        const auth = 'Basic ' + btoa(username + ':' + password);
+        
 
-        const response = await api.get('/public/getJournalEntries', {
+        const response = await axios.get(url+'/public/getJournalEntries', {
           headers: {
             Authorization: auth
           }
@@ -55,13 +50,9 @@ export default function JournalEntity({ url }) {
     e.preventDefault()
     setIsLoading(true)
     if (editingPost) {
-      const username = sessionStorage.getItem('username');
-      const password = sessionStorage.getItem('password');
-      const auth = 'Basic ' + btoa(username + ':' + password);
-
       try {
         setIsLoading(true);
-        const response = await api.put(`/admin/updateJournalEntry/${editingPost.id}`, editingPost, {
+        const response = await axios.put(url+`/admin/updateJournalEntry/${editingPost.id}`, editingPost, {
           headers: {
             Authorization: auth
           }
@@ -82,13 +73,10 @@ export default function JournalEntity({ url }) {
   }
 
   const handleDeletePost = async (id) => {
-    const username = sessionStorage.getItem('username');
-    const password = sessionStorage.getItem('password');
-    const auth = 'Basic ' + btoa(username + ':' + password);
 
     try {
       setIsLoading(true)
-      await api.delete(`/admin/deleteJournalEntry/${id}`, {
+      await axios.delete(url+`/admin/deleteJournalEntry/${id}`, {
         headers: {
           Authorization: auth
         }
@@ -161,7 +149,7 @@ export default function JournalEntity({ url }) {
     );
   }
 
-  const currentUser = sessionStorage.getItem('username');
+  const currentUser = localStorage.getItem('username');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100 sm:p-6 md:p-8">

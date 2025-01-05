@@ -9,7 +9,7 @@ const Dashboard = ({ activePage }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const role = sessionStorage.getItem('role');
+    const role = localStorage.getItem('role');
     if (role !== 'ADMIN') {
       navigate('/login');
     }

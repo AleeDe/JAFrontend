@@ -15,8 +15,8 @@ const Hero = ({ url }) => {
     trustedBy: '',
     companies: [{ name: '', src: '' }],
   });
-  const username = sessionStorage.getItem('username');
-  const password = sessionStorage.getItem('password');
+  const username = localStorage.getItem('username');
+  const password = localStorage.getItem('password');
   const auth = 'Basic ' + btoa(username + ':' + password);
   
   useEffect(() => {

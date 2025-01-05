@@ -12,7 +12,7 @@ export default function LoginSignUpForm({ url, setIsAuthenticated }) {
     password: '',
   });
   const [loading, setLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -22,16 +22,16 @@ export default function LoginSignUpForm({ url, setIsAuthenticated }) {
       [name]: value,
     });
   };
-  
+
   useEffect(() => {
     // Simulate a loading delay
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 500);
-  
+
     return () => clearTimeout(timer);
   }, []);
-      
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -40,28 +40,26 @@ export default function LoginSignUpForm({ url, setIsAuthenticated }) {
         const response = await axios.post(url + '/public/createUser', formData);
         console.log(response);
         setIsLogin(true);
-        toast.success("Login Successfull!");
+        toast.success("Signup Successful!");
         setFormData({
           username: '',
           password: '',
         });
-        toast.success("Singup Successfull!");
         navigate("/login");
       } else {
         const response = await axios.post(url + '/public/login', formData);
         console.log(response);
-        
-        if (response.data && response.status === 200) {
-          
-          sessionStorage.removeItem('username');
-          sessionStorage.removeItem('password');
-          sessionStorage.removeItem('role');
 
-          sessionStorage.setItem('username', formData.username);
-          sessionStorage.setItem('password', formData.password);
-          sessionStorage.setItem('role', response.data);
+        if (response.data && response.status === 200) {
+          localStorage.removeItem('username');
+          localStorage.removeItem('password');
+          localStorage.removeItem('role');
+
+          localStorage.setItem('username', formData.username);
+          localStorage.setItem('password', formData.password);
+          localStorage.setItem('role', response.data);
           setIsAuthenticated(true);
-          toast.success("Login Successfull!");
+          toast.success("Login Successful!");
           if (response.data === "ADMIN") {
             navigate('/dashboard');
           } else if (response.data === "STUDENT") {
@@ -77,10 +75,10 @@ export default function LoginSignUpForm({ url, setIsAuthenticated }) {
       }
     } catch (er) {
       console.log(er);
-    if(er.code ==="ERR_NETWORK"){
-      toast.error("Server is Down!");
-    }
-      if(er.status === 409) {
+      if (er.code === "ERR_NETWORK") {
+        toast.error("Server is Down!");
+      }
+      if (er.status === 409) {
         toast.error("Username Already exist!");
       }
       toast.error(er);
@@ -88,50 +86,48 @@ export default function LoginSignUpForm({ url, setIsAuthenticated }) {
       setLoading(false);
     }
   };
-  
-  if (isLoading) {
-    return(
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-  <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
-    <h2 className="mb-6 text-2xl font-bold text-center">
-      <div className="animate-pulse">
-        <div className="h-6 bg-gray-300 rounded"></div>
-      </div>
-    </h2>
-    <form className="space-y-6">
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          <div className="animate-pulse">
-            <div className="h-4 bg-gray-300 rounded"></div>
-          </div>
-        </label>
-        <div className="animate-pulse">
-          <div className="h-10 bg-gray-300 rounded"></div>
-        </div>
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          <div className="animate-pulse">
-            <div className="h-4 bg-gray-300 rounded"></div>
-          </div>
-        </label>
-        <div className="animate-pulse">
-          <div className="h-10 bg-gray-300 rounded"></div>
-        </div>
-      </div>
-      <div className="animate-pulse">
-        <div className="w-full h-10 bg-gray-300 rounded"></div>
-      </div>
-    </form>
-    <p className="mt-4 text-sm text-center">
-      <div className="animate-pulse">
-        <div className="w-3/4 h-4 mx-auto bg-gray-300 rounded"></div>
-      </div>
-    </p>
-  </div>
-</div>
 
-      
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+          <h2 className="mb-6 text-2xl font-bold text-center">
+            <div className="animate-pulse">
+              <div className="h-6 bg-gray-300 rounded"></div>
+            </div>
+          </h2>
+          <form className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                <div className="animate-pulse">
+                  <div className="h-4 bg-gray-300 rounded"></div>
+                </div>
+              </label>
+              <div className="animate-pulse">
+                <div className="h-10 bg-gray-300 rounded"></div>
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                <div className="animate-pulse">
+                  <div className="h-4 bg-gray-300 rounded"></div>
+                </div>
+              </label>
+              <div className="animate-pulse">
+                <div className="h-10 bg-gray-300 rounded"></div>
+              </div>
+            </div>
+            <div className="animate-pulse">
+              <div className="w-full h-10 bg-gray-300 rounded"></div>
+            </div>
+          </form>
+          <p className="mt-4 text-sm text-center">
+            <div className="animate-pulse">
+              <div className="w-3/4 h-4 mx-auto bg-gray-300 rounded"></div>
+            </div>
+          </p>
+        </div>
+      </div>
     );
   }
 

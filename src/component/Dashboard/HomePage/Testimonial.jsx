@@ -9,8 +9,8 @@ const Testimonials = ({ url }) => {
     testimonials: [{ quote: '', author: '', role: '', image: '' }],
   });
   const [errors, setErrors] = useState({});
-  const username = sessionStorage.getItem('username');
-  const password = sessionStorage.getItem('password');
+  const username = localStorage.getItem('username');
+  const password = localStorage.getItem('password');
   const auth = 'Basic ' + btoa(username + ':' + password);
   
   useEffect(() => {

@@ -5,31 +5,27 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
-const createApiInstance = (url) => {
-  return axios.create({
-    baseURL: url, // Replace with your API base URL
-  });
-};
+
 
 // Demo data
 const demoData = [];
 
 export default function JournalEntity({ url }) {
-  const api = createApiInstance(url);
   const [posts, setPosts] = useState(demoData);
   const [newPost, setNewPost] = useState({ title: '', content: '' });
   const [editingPost, setEditingPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const username = localStorage.getItem('username');
+        const password = localStorage.getItem('password');
+        const auth = 'Basic ' + btoa(username + ':' + password);
   useEffect(() => {
     const fetchData = async () => {
       // Simulating API fetch with demo data
       try {
-        const username = sessionStorage.getItem('username');
-        const password = sessionStorage.getItem('password');
-        const auth = 'Basic ' + btoa(username + ':' + password);
+        
 
-        const response = await api.get('/public/getJournalEntries', {
+        const response = await axios.get(url+'/public/getJournalEntries', {
           headers: {
             Authorization: auth,
           },
@@ -48,14 +44,10 @@ export default function JournalEntity({ url }) {
   const handleCreatePost = async (e) => {
     e.preventDefault();
 
-    const username = sessionStorage.getItem('username');
-    const password = sessionStorage.getItem('password');
-    const auth = 'Basic ' + btoa(username + ':' + password);
-
     setIsLoading(true);
     try {
       console.log(newPost);
-      const response = await api.post('/journal', newPost, {
+      const response = await axios.post(url+'/journal', newPost, {
         headers: {
           Authorization: auth,
         },
@@ -80,12 +72,9 @@ export default function JournalEntity({ url }) {
     e.preventDefault();
     setIsLoading(true);
     if (editingPost) {
-      const username = sessionStorage.getItem('username');
-      const password = sessionStorage.getItem('password');
-      const auth = 'Basic ' + btoa(username + ':' + password);
 
       try {
-        const response = await api.put(`/journal/updateJournalEntry/${editingPost.id}`, editingPost, {
+        const response = await axios.put(url+`/journal/updateJournalEntry/${editingPost.id}`, editingPost, {
           headers: {
             Authorization: auth,
           },

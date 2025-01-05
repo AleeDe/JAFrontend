@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Pencil, Trash2, Users, UserPlus, Search, X } from 'lucide-react';
@@ -23,8 +24,8 @@ const User = ({ url }) => {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const username = sessionStorage.getItem('username');
-  const password = sessionStorage.getItem('password');
+  const username = localStorage.getItem('username');
+  const password = localStorage.getItem('password');
   const auth = 'Basic ' + btoa(username + ':' + password);
   const [isLoading, setIsLoading] = useState(true)
   const authHeaders = useMemo(() => ({
@@ -286,6 +287,10 @@ const User = ({ url }) => {
     </div>
   );
 };
+User.propTypes = {
+  url: PropTypes.string.isRequired,
+};
 
 export default User;
+
 

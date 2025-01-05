@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 export default function About({ url }) {
@@ -9,17 +10,18 @@ export default function About({ url }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch data from the API
-    fetch(url+'/public/home/get-about')
-      .then(response => response.json())
-      .then(data => {
-        setState(data);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(url + '/public/home/get-about');
+        setState(response.data);
         setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error fetching data:', error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   // Split paragraph into sentences
